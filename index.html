@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Прыг-скок: Мастер Прыгучести</title>
+		 <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </head>
+  <style>
+  /* Стили для всех устройств */
+#unity-canvas {
+    position: absolute;
+    min-width: 50%;
+    max-width: 50%;
+    height: 100%;
+    cursor: default;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Медиа-запрос для мобильных устройств */
+@media (max-width: 768px) {
+    #unity-canvas {
+        min-width: 100%;
+        max-width: 100%;
+    }
+}
+  </style>
+  <body style="text-align: center; padding: 0; border: 0; margin: 0; ">
+    <canvas id="unity-canvas"></canvas>
+		<script>
+      vkBridge.send('VKWebAppInit')
+  .then((data) => { 
+    if (data.result) {
+      // Приложение инициализировано
+      console.log('Приложение успешно инициализировано!');
+    } else {
+      // Ошибка
+      console.log('Приложение успешно не инициализировано!');
+    }
+  })
+  .catch((error) => {
+    // Ошибка
+    console.log(error);
+  });
+
+      vkBridge.send('VKWebAppShowBannerAd', {
+  banner_location: 'bottom'
+  })
+ .then((data) => { 
+    if (data.result) {
+      // Баннерная реклама отобразилась
+      console.log('Баннерная реклама отобразилась!');
+    }
+  })
+  .catch((error) => {
+    // Ошибка
+    console.log('Баннерная реклама не отобразилась!');
+    console.log(error);
+  });
+
+      // Проверяем, добавлена ли игра на главный экран
+vkBridge.send('VKWebAppAddToHomeScreenInfo')
+  .then( (data) => {
+    if (! data.is_added_to_home_screen) {    // Если не добавлена,
+      bridge.send('VKWebAppAddToHomeScreen') //  то добавляем
+        .then( (data) => {
+          if (data.result) {
+            // Игра добавлена.
+            console.log('Игра успешно добавлена!');
+          } else {
+            // Игра уже добавлена
+            console.log('Игра уже была добавлена!');
+          }
+        })
+        .catch( (e) => {
+          // Пользователь отклонил запрос или 
+          // произошла ошибка
+        })    
+     }
+   })
+   .catch( (e) => { console.log('Ошибка', e); });
+
+    vkBridge.send('VKWebAppAddToFavorites')
+  .then((data) => { 
+    if (data.result) {
+      // Игра добавлена в левое меню...
+      console.log('Игра успешно добавлена в левое меню!');
+    }
+  })
+  .catch ((error) => {
+    console.log(error); // Ошибка...
+  });
+  
+	function StatusFromUnityToJs()
+	{
+console.log('Нажата кнопка для создания записи на стене!');
+callMethodWallPost();
+	
+	}
+	
+	function RestartFromUnityToJs()
+	{
+console.log('Нажата кнопка для приглашения друга в игру!');
+callMethodSendInvite();
+	
+	}
+
+		       function callMethodSendInvite() // вызываем метод ВК
+      {
+vkBridge.send('VKWebAppShowInviteBox', { 
+  requestKey: 'key-12345' /* Необязательный параметр. Ключ приглашения. */
+  })
+  .then( (data) => {
+    if (data.success) {
+      // Приглашение выслано ...
+      // ...
+      
+      // Эти пользователи не получили сообщение
+      // console.log('Приглашение не было отослано', data.notSentIds );
+    }
+  })
+  .catch( (e) => { 
+    let { error_code, error_reason } = e.error_data; 
+    if( error_code == 4 && error_reason == 'User denied') {
+      // Пользователь нажал «Отмена» в диалоге
+    }  
+  });
+
+      }
+
+		          function callMethodWallPost() // вызываем метод ВК
+         {
+            vkBridge.send('VKWebAppShowWallPostBox', {
+              message: 'Я играю в Smart Ball: Perfect Leap, присоединяйся и ты!',
+		attachment: 'https://vk.com/app51717962_570312098'
+              })
+              .then((data) => {
+                if (data.post_id) {
+                  // Запись размещена
+                  console.log ("ok");
+                }
+              })
+              .catch((error) => {
+                // Ошибка
+                console.log(error);
+              });
+
+         }
+	</script>
+    <script src="Build/HTMLGame.loader.js"></script>
+    <script>
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+
+        var canvas = document.querySelector("#unity-canvas");
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+        canvas.style.position = "absolute";
+
+        document.body.style.textAlign = "left";
+      }
+
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/HTMLGame.data.unityweb",
+        frameworkUrl: "Build/HTMLGame.framework.js.unityweb",
+        codeUrl: "Build/HTMLGame.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Game Application Development Studio ",
+        productName: "MyCudeJumpGame2D",
+        productVersion: "1.0",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      });
+    </script>
+  </body>
+</html>
