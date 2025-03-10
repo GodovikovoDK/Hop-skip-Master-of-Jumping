@@ -107,6 +107,11 @@ console.log('Нажата кнопка для приглашения друга 
 callMethodSendInvite();
 	
 	}
+	function RestartAdsFromUnityToJs()
+	{
+	console.log('Нажата кнопка для показа рекламы между экранами!');
+	callMethodNativeAds();
+	}
 
 		       function callMethodSendInvite() // вызываем метод ВК
       {
@@ -189,6 +194,25 @@ vkBridge.send('VKWebAppShowStoryBox', {
   })
 
          }
+		 
+		 function callMethodNativeAds()
+		 {
+		 // Проверка к готовности рекламы к показу.
+// Вызовите этот код заранее.
+vkBridge.send('VKWebAppCheckNativeAds', { ad_format: 'interstitial'});
+
+// ...  
+
+// Показать рекламу
+vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
+  .then((data) => {
+    if (data.result)
+      console.log('Реклама показана');
+    else
+      console.log('Ошибка при показе');
+  })
+  .catch((error) => { console.log(error); /* Ошибка */ });
+		 }
 	</script>
     <script src="Build/HTMLGame.loader.js"></script>
     <script>
