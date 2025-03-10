@@ -133,20 +133,60 @@ vkBridge.send('VKWebAppShowInviteBox', {
 
 		          function callMethodWallPost() // вызываем метод ВК
          {
-            vkBridge.send('VKWebAppShowWallPostBox', {
-              message: 'Я играю в Smart Ball: Perfect Leap, присоединяйся и ты!',
-		attachment: 'https://vk.com/app51717962_570312098'
-              })
-              .then((data) => {
-                if (data.post_id) {
-                  // Запись размещена
-                  console.log ("ok");
-                }
-              })
-              .catch((error) => {
-                // Ошибка
-                console.log(error);
-              });
+bridge.send('VKWebAppShowStoryBox', {
+  // Задаёт фон истории
+  "background_type": "image", // Тип фона — картинка
+  "url": "https://example.com/v850136098/story-1.jpg", // Адрес картинки
+  "locked": true, // Блокируем изменение размеров и положения фона 
+
+  // Кнопка внизу истории для перехода в игру
+  "attachment": {
+    "type": "url",  // Тип объекта — ссылка
+    "text": "open", // Константа, которая определяет текст ссылки
+                    // "open" — «Открыть»
+                    // "game" — «Играть»
+    "url": "https://vk.com/app12345" // Адрес игры
+  },
+
+  // Дополнительные изобразительные элементы
+  "stickers": [
+    // Текст в верхней части экрана
+    {"sticker_type": "native",
+      "sticker": { 
+        "action_type": "text", 
+        "action": { // Текст и его атрибуты
+          "text": "Я нашёл 200 алмазов", 
+       "style": "classic",
+       "background_style": "none",
+       "selection_color": "#FF8080"
+     },
+     "transform": { // Определяет положение текста
+       "gravity": "center_top",
+       "translation_y": 0.25
+     }}
+    },
+    // Текст в нижней части экрана
+    {"sticker_type": "native",
+      "sticker": { 
+        "action_type": "text", 
+          "action": { // Текст и его атрибуты
+         "text": "в игре «Пещера горного Короля»!",
+         "style": "classic",
+         "background_style": "none",
+         "selection_color": "#40FFF0"
+       },
+     "transform": { // Определяет положение текста
+       "gravity": "center_bottom",
+       "translation_y": -0.25
+     }}
+    }]
+  })
+  .then( (data) => {
+    // История размещена...
+  })
+  .catch( (e) => {
+    console.log("Ошибка!", e);
+  })
 
          }
 	</script>
