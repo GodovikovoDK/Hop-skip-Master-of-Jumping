@@ -218,7 +218,31 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
 		 {
 		 print("gfgfgfg");
 		 }
-		 
+bridge.send('VKWebAppStorageSet', {
+   key: 'HighScore'
+  })
+  .then((data) => { 
+    if (data.result) {
+      // Значение переменной задано
+    }
+  })
+  .catch((error) => {
+    // Ошибка
+    console.log(error);
+  });	
+bridge.send('VKWebAppStorageGet', {
+  keys: [
+    'HighScore'
+  ]})
+  .then((data) => { 
+    if (data.keys) {
+      // Значения получены
+    }
+  })
+  .catch((error) => {
+    // Ошибка
+    console.log(error);
+  });
 	</script>
     <script src="Build/HTMLGame.loader.js"></script>
     <script>
