@@ -214,34 +214,38 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
   .catch((error) => { console.log(error); /* Ошибка */ });
 		 }
 
-function storageGet() {
-bridge.send('VKWebAppStorageSet', {
+      function storageSet(key, value) {
+        vkBridge.send('VKWebAppStorageSet', {
    key: 'HIGH_SCORE_KEY'
   })
   .then((data) => { 
     if (data.result) {
       // Значение переменной задано
-	    console.log("ГУУУД");
+	    console.log("HIGH_SCORE_KEY УРАРАА");
     }
   })
   .catch((error) => {
     // Ошибка
     console.log(error);
   });
-bridge.send('VKWebAppStorageGet', {
+      }
+      function storageGet(key){
+vkBridge.send('VKWebAppStorageGet', {
   keys: [
     'HIGH_SCORE_KEY'
   ]})
   .then((data) => { 
     if (data.keys) {
       // Значения получены
+	    console.log("HIGH_SCORE_KEY ПОЛУЧ");
     }
   })
   .catch((error) => {
     // Ошибка
     console.log(error);
   });
-}	 
+
+      }	 
 		 
 	</script>
     <script src="Build/HTMLGame.loader.js"></script>
