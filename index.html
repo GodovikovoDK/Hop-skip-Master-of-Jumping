@@ -213,6 +213,35 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
   })
   .catch((error) => { console.log(error); /* Ошибка */ });
 		 }
+
+vkBridge.send('VKWebAppStorageSet', {
+   key: 'HIGH_SCORE_KEY'
+  })
+  .then((data) => { 
+    if (data.result) {
+      // Значение переменной задано
+	    console.log("Сохранено!");
+    }
+  })
+  .catch((error) => {
+    // Ошибка
+    console.log(error);
+  });
+
+vkBridge.send('VKWebAppStorageGet', {
+  keys: [
+    'HIGH_SCORE_KEY'
+  ]})
+  .then((data) => { 
+    if (data.keys) {
+	    console.log("Передано!");
+      // Значения получены
+    }
+  })
+  .catch((error) => {
+    // Ошибка
+    console.log(error);
+  });
 	</script>
     <script src="Build/HTMLGame.loader.js"></script>
     <script>
