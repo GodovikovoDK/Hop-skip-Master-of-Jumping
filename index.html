@@ -215,10 +215,9 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
 		 }
 
 function storageGet() {
-    const bridge = vkBridge.default;
-    bridge.send("VKWebAppStorageGet", {"keys": ["HIGH_SCORE_KEY"]});
+    vkBridge.send("VKWebAppStorageGet", {"keys": ["HIGH_SCORE_KEY"]});
     
-    bridge.subscribe((e) => {
+    vkBridge.subscribe((e) => {
         if (e.detail.type === 'VKWebAppStorageGetResult') {
             const result = e.detail.data.values.HIGH_SCORE_KEY.value;
             console.log(`Полученное значение: ${result}`);
