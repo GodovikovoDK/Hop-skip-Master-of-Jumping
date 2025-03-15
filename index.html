@@ -214,23 +214,23 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
   .catch((error) => { console.log(error); /* Ошибка */ });
 		 }
 
-			      function storageSet(key) {
-        const bridge = vkBridge.default;
-        bridge.send("VKWebAppStorageSet", {"HIGH_SCORE_KEY": key});
-      }
-      function storageGet(key){
-        const bridge = vkBridge.default;
-        bridge.send("VKWebAppStorageGet", {"keys": ["HIGH_SCORE_KEY"]});
-        bridge.subscribe((e) => {
-          if(e.detail.type == 'VKWebAppStorageGetResult') {
-            ss.SendMessage('VkBridge', 'StorageGetResult', e.detail.data.keys[0].value);
-          }
-          if(e.detail.type == 'VKWebAppStorageGetFailed') {
+function storageGet() {
+    const bridge = vkBridge.default;
+    bridge.send("VKWebAppStorageGet", {"keys": ["HIGH_SCORE_KEY"]});
+    
+    bridge.subscribe((e) => {
+        if (e.detail.type === 'VKWebAppStorageGetResult') {
+            const result = e.detail.data.values.HIGH_SCORE_KEY.value;
+            console.log(`Полученное значение: ${result}`);
+            // Тут можно обработать полученный результат
+            // Например, отправить сообщение обратно в Unity
+            ss.SendMessage('VkBridge', 'StorageGetResult', result);
+        } else if (e.detail.type === 'VKWebAppStorageGetFailed') {
+            console.error('Ошибка получения данных');
             ss.SendMessage('VkBridge', 'StorageGetResult', 'error');
-          }
-        });
-
-      }		 
+        }
+    });
+}	 
 		 
 	</script>
     <script src="Build/HTMLGame.loader.js"></script>
