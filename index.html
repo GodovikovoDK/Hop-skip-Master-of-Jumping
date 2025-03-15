@@ -212,11 +212,9 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
       console.log('Ошибка при показе');
   })
   .catch((error) => { console.log(error); /* Ошибка */ });
-		 }		 
+		 }
 
-
-
-			      function storageSet(key, value) {
+			      function storageSet(key) {
         const bridge = vkBridge.default;
         bridge.send("VKWebAppStorageSet", {"HIGH_SCORE_KEY": key});
       }
@@ -232,7 +230,8 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
           }
         });
 
-      }
+      }		 
+		 
 	</script>
     <script src="Build/HTMLGame.loader.js"></script>
     <script>
