@@ -215,20 +215,32 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
 		 }
 
 function storageGet() {
-    vkBridge.send("VKWebAppStorageGet", {"keys": ["HIGH_SCORE_KEY"]});
-    
-    vkBridge.subscribe((e) => {
-        if (e.detail.type === 'VKWebAppStorageGetResult') {
-            const result = e.detail.data.values.HIGH_SCORE_KEY.value;
-            console.log(`Полученное значение: ${result}`);
-            // Тут можно обработать полученный результат
-            // Например, отправить сообщение обратно в Unity
-            ss.SendMessage('VkBridge', 'StorageGetResult', result);
-        } else if (e.detail.type === 'VKWebAppStorageGetFailed') {
-            console.error('Ошибка получения данных');
-            ss.SendMessage('VkBridge', 'StorageGetResult', 'error');
-        }
-    });
+bridge.send('VKWebAppStorageSet', {
+   key: 'HIGH_SCORE_KEY'
+  })
+  .then((data) => { 
+    if (data.result) {
+      // Значение переменной задано
+	    console.log("ГУУУД");
+    }
+  })
+  .catch((error) => {
+    // Ошибка
+    console.log(error);
+  });
+bridge.send('VKWebAppStorageGet', {
+  keys: [
+    'HIGH_SCORE_KEY'
+  ]})
+  .then((data) => { 
+    if (data.keys) {
+      // Значения получены
+    }
+  })
+  .catch((error) => {
+    // Ошибка
+    console.log(error);
+  });
 }	 
 		 
 	</script>
