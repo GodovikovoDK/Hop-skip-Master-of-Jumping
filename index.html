@@ -141,7 +141,7 @@ vkBridge.send('VKWebAppShowInviteBox', {
 vkBridge.send('VKWebAppShowStoryBox', {
   // Задаёт фон истории
   "background_type": "image", // Тип фона — картинка
-  "url": "https://avatars.mds.yandex.net/get-shedevrum/16106905/img_e6d31d11fdb611ef9dc2be041cf9418b/orig", // Адрес картинки
+  "url": "https://i.pinimg.com/736x/66/7b/f9/667bf92380a20255073b39c67be3d1fc.jpg", // Адрес картинки
   "locked": true, // Блокируем изменение размеров и положения фона 
 
   // Кнопка внизу истории для перехода в игру
@@ -213,7 +213,12 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
   })
   .catch((error) => { console.log(error); /* Ошибка */ });
 		 }
-
+		 
+		 function HelloSCore()
+		 {
+		 print("gfgfgfg");
+		 }
+		 
 	</script>
     <script src="Build/HTMLGame.loader.js"></script>
     <script>
@@ -244,5 +249,6 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       });
     </script>
+	
   </body>
 </html>
