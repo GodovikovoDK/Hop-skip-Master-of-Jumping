@@ -214,8 +214,7 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
   .catch((error) => { console.log(error); /* Ошибка */ });
 		 }	 
 	      function storageSet(key, value) {
-        const bridge = vkBridge.default;
-        bridge.send("VKWebAppStorageSet", {"key": key, "value": value});
+        vkBridge.send("VKWebAppStorageSet", {"key": key, "value": value});
 		      console.log("Сохранено - "+value);
       }	 
 	</script>
