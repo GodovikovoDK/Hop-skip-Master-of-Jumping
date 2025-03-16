@@ -213,24 +213,22 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
   })
   .catch((error) => { console.log(error); /* Ошибка */ });
 		 }
-
-			      function storageSet(key) {
-        const bridge = vkBridge.default;
-        bridge.send("VKWebAppStorageSet", {"HIGH_SCORE_KEY": key});
-      }
-      function storageGet(key){
-        const bridge = vkBridge.default;
-        bridge.send("VKWebAppStorageGet", {"keys": ["HIGH_SCORE_KEY"]});
-        bridge.subscribe((e) => {
-          if(e.detail.type == 'VKWebAppStorageGetResult') {
-            ss.SendMessage('VkBridge', 'StorageGetResult', e.detail.data.keys[0].value);
-          }
-          if(e.detail.type == 'VKWebAppStorageGetFailed') {
-            ss.SendMessage('VkBridge', 'StorageGetResult', 'error');
-          }
-        });
-
-      }		 
+function ScoreFromUnityToJs()
+{
+bridge.send('VKWebAppStorageSet', {
+   key: 'HIGH_SCORE_KEY',
+  })
+  .then((data) => { 
+    if (data.result) {
+      // Значение переменной задано
+	  console.log("Сохранено"+key);
+    }
+  })
+  .catch((error) => {
+    // Ошибка
+    console.log(error);
+  });
+}		 
 		 
 	</script>
     <script src="Build/HTMLGame.loader.js"></script>
