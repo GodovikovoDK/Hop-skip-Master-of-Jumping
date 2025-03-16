@@ -220,10 +220,10 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
 
       function storageGet(key){
         vkBridge.send("VKWebAppStorageGet", {"keys": [key]});
+	      console.log("Самый лучший: "+keys[0].value);
         vkBridge.subscribe((e) => {
           if(e.detail.type == 'VKWebAppStorageGetResult') {
             ss.SendMessage('VkBridge', 'StorageGetResult', e.detail.data.keys[0].value);
-			console.log("Самый лучший: ");
           }
           if(e.detail.type == 'VKWebAppStorageGetFailed') {
             ss.SendMessage('VkBridge', 'StorageGetResult', 'error');
