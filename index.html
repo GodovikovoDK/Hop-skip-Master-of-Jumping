@@ -219,17 +219,19 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
       }
 
 function storageGet(key) {
-  vkBridge.send('VKWebAppStorageGet', {
-    keys: [key]
-  }).then((data) => {
-    if (data.keys && data.keys[key]) {
-      const value = data.keys[key];
-      console.log("Значение для ключа '" + key + "':", value);
-    } else {
-      console.error("Ключ '" + key + "' не найден.");
+bridge.send('VKWebAppStorageGet', {
+  keys: [
+    'HighScore'
+  ]})
+  .then((data) => { 
+    if (data.keys) {
+      // Значения получены
+	    console.log("Значание отправленное - "+data.keys);
     }
-  }).catch((error) => {
-    console.error("Ошибка получения данных:", error);
+  })
+  .catch((error) => {
+    // Ошибка
+    console.log(error);
   });
 }  
 	</script>
