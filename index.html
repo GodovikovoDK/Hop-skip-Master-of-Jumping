@@ -220,9 +220,9 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
 
       function storageGet(key){
 vkBridge.send('VKWebAppStorageGet', {
-  keys: ['HIGH_SCORE_KEY']
+  keys: ['key']
 }).then((data) => {
-  if (data.keys && data.keys.HIGH_SCORE_KEY) {
+  if (data.keys && data.keys.key) {
     const highScore = data.keys.HIGH_SCORE_KEY;
     console.log("Значение HIGH_SCORE_KEY:", highScore);
   } else {
