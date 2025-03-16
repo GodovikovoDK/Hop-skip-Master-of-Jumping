@@ -212,24 +212,11 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
       console.log('Ошибка при показе');
   })
   .catch((error) => { console.log(error); /* Ошибка */ });
-		 }
-function ScoreFromUnityToJs()
-{
-bridge.send('VKWebAppStorageSet', {
-   key: 'HIGH_SCORE_KEY',
-  })
-  .then((data) => { 
-    if (data.result) {
-      // Значение переменной задано
-	  console.log("Сохранено"+key);
-    }
-  })
-  .catch((error) => {
-    // Ошибка
-    console.log(error);
-  });
-}		 
-		 
+		 }	 
+	      function storageSet(key, value) {
+        const bridge = vkBridge.default;
+        bridge.send("VKWebAppStorageSet", {"key": key, "value": value});
+      }	 
 	</script>
     <script src="Build/HTMLGame.loader.js"></script>
     <script>
