@@ -220,20 +220,17 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
 
       function storageGet(key){
 vkBridge.send('VKWebAppStorageGet', {
-  keys: [
-    'HIGH_SCORE_KEY'
-  ]})
-  .then((data) => { 
-    if (data.keys) {
-      // Значения получены
-	    const highScore = data.keys.HIGH_SCORE_KEY;
-	    console.log("УРАААААА"+highScore);
-    }
-  })
-  .catch((error) => {
-    // Ошибка
-    console.log(error);
-  });
+  keys: ['HIGH_SCORE_KEY']
+}).then((data) => {
+  if (data.keys && data.keys.HIGH_SCORE_KEY) {
+    const highScore = data.keys.HIGH_SCORE_KEY;
+    console.log("Значение HIGH_SCORE_KEY:", highScore);
+  } else {
+    console.error("Ключ HIGH_SCORE_KEY не найден.");
+  }
+}).catch((error) => {
+  console.error("Ошибка получения данных:", error);
+});
 
       }	  
 	</script>
