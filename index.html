@@ -219,20 +219,22 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
       }
 
 function storageGet(key) {
-bridge.send('VKWebAppStorageGet', {
-  keys: [
-    'HighScore'
-  ]})
-  .then((data) => { 
-    if (data.keys) {
-      // Значения получены
-	    console.log("Значание отправленное - "+data.keys);
+vkBridge.send('VKWebAppStorageGet', {
+  keys: ['HighScore']
+}).then(data => {
+  if (data.keys && data.keys.length > 0) {
+    const highScore = data.keys.find(key => key.key === 'HighScore');
+    if (highScore) {
+      console.log(`Значение HighScore: ${highScore.value}`);
+    } else {
+      console.error('Ключ HighScore не найден.');
     }
-  })
-  .catch((error) => {
-    // Ошибка
-    console.log(error);
-  });
+  } else {
+    console.error('Нет сохраненных значений.');
+  }
+}).catch(error => {
+  console.error('Ошибка:', error);
+});
 }  
 	</script>
     <script src="Build/HTMLGame.loader.js"></script>
