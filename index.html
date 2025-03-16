@@ -226,7 +226,7 @@ vkBridge.send('VKWebAppStorageGet', {
   .then((data) => { 
     if (data.keys) {
       // Значения получены
-	    console.log("УРАААААА");
+	    console.log("УРАААААА"+data.keys);
     }
   })
   .catch((error) => {
