@@ -214,38 +214,23 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
   .catch((error) => { console.log(error); /* Ошибка */ });
 		 }
 
-      function storageSet(key, value) {
-        vkBridge.send('VKWebAppStorageSet', {
-   key: 'HIGH_SCORE_KEY'
-  })
-  .then((data) => { 
-    if (data.result) {
-      // Значение переменной задано
-	    console.log("HIGH_SCORE_KEY УРАРАА");
-    }
-  })
-  .catch((error) => {
-    // Ошибка
-    console.log(error);
-  });
+			      function storageSet(key) {
+        const bridge = vkBridge.default;
+        bridge.send("VKWebAppStorageSet", {"HIGH_SCORE_KEY": key});
       }
       function storageGet(key){
-vkBridge.send('VKWebAppStorageGet', {
-  keys: [
-    'HIGH_SCORE_KEY'
-  ]})
-  .then((data) => { 
-    if (data.keys) {
-      // Значения получены
-	    console.log("HIGH_SCORE_KEY ПОЛУЧ");
-    }
-  })
-  .catch((error) => {
-    // Ошибка
-    console.log(error);
-  });
+        const bridge = vkBridge.default;
+        bridge.send("VKWebAppStorageGet", {"keys": ["HIGH_SCORE_KEY"]});
+        bridge.subscribe((e) => {
+          if(e.detail.type == 'VKWebAppStorageGetResult') {
+            ss.SendMessage('VkBridge', 'StorageGetResult', e.detail.data.keys[0].value);
+          }
+          if(e.detail.type == 'VKWebAppStorageGetFailed') {
+            ss.SendMessage('VkBridge', 'StorageGetResult', 'error');
+          }
+        });
 
-      }	 
+      }		 
 		 
 	</script>
     <script src="Build/HTMLGame.loader.js"></script>
