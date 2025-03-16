@@ -216,6 +216,7 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
 	      function storageSet(key, value) {
         const bridge = vkBridge.default;
         bridge.send("VKWebAppStorageSet", {"key": key, "value": value});
+		      console.log("Сохранено - "+value);
       }	 
 	</script>
     <script src="Build/HTMLGame.loader.js"></script>
