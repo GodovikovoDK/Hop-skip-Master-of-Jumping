@@ -31,6 +31,7 @@
   <body style="text-align: center; padding: 0; border: 0; margin: 0; ">
     <canvas id="unity-canvas"></canvas>
 		<script>
+			let globalHighScore;
       vkBridge.send('VKWebAppInit')
   .then((data) => { 
     if (data.result) {
@@ -217,7 +218,7 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
         vkBridge.send("VKWebAppStorageSet", {"key": key, "value": value});
 		      console.log("Сохранено - "+value+" "+key);
       }
-var myGameInstance = null;
+
 function storageGet(key) {
 vkBridge.send('VKWebAppStorageGet', {
   keys: ['HighScore']
@@ -226,7 +227,7 @@ vkBridge.send('VKWebAppStorageGet', {
     const highScore = data.keys.find(key => key.key === 'HighScore');
     if (highScore) {
       console.log(`Значение HighScore: ${highScore.value}`);
-	  myGameInstance.SendMessage('GameManager', 'OnHighScoreReceived', highScore.value);
+	    globalHighScore = highScore.value;
     } else {
       console.error('Ключ HighScore не найден.');
     }
@@ -267,6 +268,7 @@ vkBridge.send('VKWebAppStorageGet', {
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       });
+console.log("КЕК"+globalHighScore);
     </script>
 	
   </body>
