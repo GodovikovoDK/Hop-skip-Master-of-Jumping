@@ -6,32 +6,6 @@
     <title>Прыг-скок: Мастер Прыгучести</title>
 		 <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
- <script>
-let myGameInstance = null;
-
-const canvas = document.querySelector('#unity-canvas'); // Предположим, что канва имеет id "unity-canvas"
-const config = {
-    dataUrl: 'Build/HTMLGame.data',
-    frameworkUrl: 'Build/HTMLGame.framework.js',
-    codeUrl: 'Build/HTMLGame.wasm',
-};
-
-canvas.onload = () => {
-    createUnityInstance(canvas, config, (progress) => {
-        // Логика для отображения прогресса загрузки здесь...
-        console.log(`Загрузка: ${Math.round(progress * 100)}%`);
-    })
-    .then((unityInstance) => {
-        myGameInstance = unityInstance;
-        console.log('Unity загружен!', myGameInstance);
-        
-
-    })
-    .catch((error) => {
-        console.error('Ошибка при загрузке Unity:', error);
-    });
-};
-</script>
   </head>
   <style>
   /* Стили для всех устройств */
@@ -243,7 +217,7 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
         vkBridge.send("VKWebAppStorageSet", {"key": key, "value": value});
 		      console.log("Сохранено - "+value+" "+key);
       }
-
+var myGameInstance = null;
 function storageGet(key) {
 vkBridge.send('VKWebAppStorageGet', {
   keys: ['HighScore']
