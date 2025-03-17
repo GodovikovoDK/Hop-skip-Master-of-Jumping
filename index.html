@@ -226,7 +226,7 @@ vkBridge.send('VKWebAppStorageGet', {
     const highScore = data.keys.find(key => key.key === 'HighScore');
     if (highScore) {
 	window.Cubie.setHighScore(highScore.value);
-      console.log(`Значение HighScore: ${highScore.value}`);
+      console.log('Значение HighScore: ${highScore.value}');
     } else {
       console.error('Ключ HighScore не найден.');
     }
