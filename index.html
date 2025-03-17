@@ -225,8 +225,8 @@ vkBridge.send('VKWebAppStorageGet', {
   if (data.keys && data.keys.length > 0) {
     const highScore = data.keys.find(key => key.key === 'HighScore');
     if (highScore) {
-      // Передаем значение HighScore в Unity
-      window.location.href = "unity://SetHighScore?score=" + highScore.value;
+      console.log(`Значение HighScore: ${highScore.value}`);
+	  unityInstance.SendMessage('Cubie','ViewSaveScore', `Значение HighScore: ${highScore.value}`);
     } else {
       console.error('Ключ HighScore не найден.');
     }
