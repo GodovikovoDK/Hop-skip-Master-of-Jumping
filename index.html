@@ -351,7 +351,7 @@ vkBridge.send('VKWebAppStorageGet', {
     if (highScore) {
       console.log(`Значение HighScore: ${highScore.value}`);
 	  MyunityInstance.SendMessage('MyGameObject', 'setTextScore', highScore.value);
-	    MyunityInstance.SendMessage('cubie', 'ShowBestScore', highScore.value);
+	  MyunityInstance.SendMessage('cubie', 'Death', highScore.value);
     } else {
       console.error('Ключ HighScore не найден.');
     }
