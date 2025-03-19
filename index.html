@@ -343,24 +343,27 @@ vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
       }
 
 function storageGet(key) {
-vkBridge.send('VKWebAppStorageGet', {
-  keys: ['HighScore']
-}).then(data => {
-  if (data.keys && data.keys.length > 0) {
-    const highScore = data.keys.find(key => key.key === 'HighScore');
-    if (highScore) {
-      console.log(`Значение HighScore: ${highScore.value}`);
-	  //MyunityInstance.SendMessage('MyGameObject', 'setTextScore', highScore.value);
-	  MyunityInstance.SendMessage('cubie', 'ShowBestScore', highScore.value);
+  vkBridge.send('VKWebAppStorageGet', {
+    keys: ['HighScore']
+  }).then(data => {
+    if (data.keys && data.keys.length > 0) {
+      const highScoreObj = data.keys.find(key => key.key === 'HighScore');
+      let highScoreValue = highScoreObj ? highScoreObj.value : null;
+      
+      // Проверка на null и присвоение 0
+      if (highScoreValue === null || highScoreValue === undefined) {
+        highScoreValue = 0;
+      }
+
+      console.log(`Значение HighScore: ${highScoreValue}`);
+      //MyunityInstance.SendMessage('MyGameObject', 'setTextScore', highScoreValue);
+      MyunityInstance.SendMessage('cubie', 'ShowBestScore', highScoreValue);
     } else {
       console.error('Ключ HighScore не найден.');
     }
-  } else {
-    console.error('Нет сохраненных значений.');
-  }
-}).catch(error => {
-  console.error('Ошибка:', error);
-});
+  }).catch(error => {
+    console.error('Ошибка:', error);
+  });
 }  
 
     </script>
