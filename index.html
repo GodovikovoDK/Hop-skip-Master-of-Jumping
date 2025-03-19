@@ -357,7 +357,7 @@ function storageGet(key) {
 
       console.log(`Значение HighScore: ${highScoreValue}`);
       //MyunityInstance.SendMessage('MyGameObject', 'setTextScore', highScoreValue);
-      MyunityInstance.SendMessage('cubie', 'ShowBestScore', highScoreValue.toString());
+      MyunityInstance.SendMessage('cubie', 'ShowBestScore', `${highScoreValue}`);
     } else {
       console.error('Ключ HighScore не найден.');
     }
