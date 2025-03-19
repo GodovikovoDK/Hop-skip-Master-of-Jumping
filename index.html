@@ -348,10 +348,10 @@ function storageGet(key) {
   }).then(data => {
     if (data.keys && data.keys.length > 0) {
       const highScoreObj = data.keys.find(key => key.key === 'HighScore');
-      let highScoreValue = highScoreObj ? highScoreObj.value : null;
+      let highScoreValue = highScoreObj ? highScoreObj.value : '';
       
-      // Проверка на null и присвоение 0
-      if (highScoreValue === null || highScoreValue === undefined) {
+      // Проверка на пустую строку и присвоение 0
+      if (!highScoreValue || highScoreValue.trim() === '') {
         highScoreValue = 0;
       }
 
